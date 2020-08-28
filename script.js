@@ -3,26 +3,28 @@ const library = document.querySelector('#library');
 const body = document.querySelector('#body');
 const bookForm = document.querySelector('#newBook');
 
+
 // Add book button
 const addBookBtn = document.createElement('button');
 addBookBtn.className = 'button';
 addBookBtn.textContent = 'Add a Book';
 body.appendChild(addBookBtn);
 
-// Submit button
-const submit = document.querySelector('#submit');
 
 // Form hidden/visible
 bookForm.classList.toggle('formHidden');
 addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
-/*
-	On submit change class to .formHidden
-*/
+// Hiding form after submission is in addBooktoLibrary() function
 
 
 // An array to store each card
 let myLibrary = [];
 
+//=========TESTING=========\\
+let prince = new Book('The Little Prince', 'Antoine de Saint-Exupery', 37, 0);
+
+let gatsby = new Book('The Great Gatsby', 'F. Scott Fitzgerald', 197, 1);
+myLibrary.push(prince, gatsby)
 
 // Book constructor and prototype funcitons
 function Book(title, author, pages, read){
@@ -46,38 +48,56 @@ Book.prototype.about = function() {
 
 // Create a book from the constructor, add it to myLibrary array
 function addBooktoLibrary() {
+	
+	// Collect data from form
 	let author = document.querySelector('#fauthor').value;
 	let title = document.querySelector('#ftitle').value;
 	let pages = document.querySelector('#fpages').value;
 	let read = document.querySelector('#fread').checked;
 	
-	let book = new Book(title, author, pages, read)
+	// Create Book object
+	let book = new Book(title, author, pages, read);
 	
+	// Add book to myLibrary
 	myLibrary.push(book); 
+	console.log(myLibrary[myLibrary.length - 1]);
 	
-//	submit.addEventListener('click', () => bookForm.classList.toggle('formHidden'));
-	
-	console.log(myLibrary);
-	return bookForm.classList.toggle('formHidden');
-	/*
-		-	learn how to toggle the form to formHidden when form is submitted
-	
-		
-		This function is called in the addBook function	
-			only when there are items that hold those IDs
-			
-		IN MAKING THE FORM
-			be sure that you use these IDs to identify each item.
-	*/
+	// Hide form
+	bookForm.classList.remove('formOpen');
 	
 	//CLEAR FORM
+	document.querySelector('#fauthor').value = '';
+	document.querySelector('#ftitle').value = '';
+	document.querySelector('#fpages').value = '';
+	document.querySelector('#fread').value = '';
+	render();
 }
 
 
 // Display books on screen
 function render() {
+	// Remove exisiting nodes from the display to allow a full repopulation below
+	while (library.hasChildNodes()){
+		library.removeChild(library.lastChild);
+	}
 	
-	
+	// Display each book in myLibrary
+	for (book of myLibrary) {
+		console.log(book.title);
+		
+		let newDiv = document.createElement('div');
+		let newTitle = document.createElement('h1');
+		library.appendChild(newDiv);
+		newDiv.appendChild(newTitle)
+		newDiv.style.backgroundColor = randomColor();
+		newDiv.className = 'book';
+		newTitle.textContent = `${book.title}`;
+		
+		
+
+		
+	}
+	//console.log(myLibrary[i][title]);
 	
 	/*
 	for each item in myLibrary:
@@ -92,32 +112,28 @@ function render() {
 		MUST create funcitons for div buttons
 	*/
 }
+render();
 
 
 
-
-
-
+function randomColor() {
+	let r = Math.floor(Math.random() * 256);
+	let g = Math.floor(Math.random() * 256);
+	let b = Math.floor(Math.random() * 256);
+	return `rgb(${r},${g},${b})`;
+}
 
 
 /*/========TO DO=========\*\
 
-Button
-Form
-	can start as a static form in HTML
-	want it to be a pop-up form in final
-		POSSIBLY;
-			create div for form in HTML with class
-			in CSS *hide* the div until/unless the 'add book' button is clicked
-			can create a pop-out with translucent background to make it really pop.
-			
-			check out youtube videos on HTML/CSS for more info
-Clear form
 Render
+	Currently titles appear. 
+	make all of it appear.
+	
 Display
+	make everything look good
 
-
-
+Back to TOP for other functionality.
 /*/
 
 /*/===========THINGS TO STUDY============\*\
