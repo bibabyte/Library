@@ -1,5 +1,4 @@
 body {
-	background: green;
 	margin: none;
 }
 
@@ -10,19 +9,16 @@ body {
 
 .book {
 	display: flex;
-	border: 1px solid #e72;
+	justify-content: space-around;
+	padding: 2vh;
+	margin
 }
 
 button {
-	background: blue;
+	
 }
 
-.formHidden {
-	display: none;
-}
-
-
-.formOpen {
+#newBook {
 	position: fixed;
 	background-color: rgba(0,0,0,0.5);
 	z-index: 2;
@@ -35,8 +31,18 @@ button {
 	justify-content: center;
 }
 
+.formHidden {
+	visibility: hidden;
+}
+
+
+.formOpen {
+	visibility: visible;
+}
+
 form {
 	background: white;
 	padding: 3vh;
 	border-radius: 1vh;
 }
+
