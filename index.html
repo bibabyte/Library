@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TOP Library</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<div id="body">
+		<div id="newBook">
+			<form onsubmit='addBooktoLibrary();return false' method="post" action="">
+				<fieldset>
+					<legend>Add a New Book</legend>
+					<!--action: where to store info
+						target: where to display info (default is in current page: _self)
+						method: hTTP methodto use when submitting form data
+							GET is default - not secure
+							POST is better for security
+						onsubmit: calls a JS function-->
+					<label for="ftitle">Title:</label>
+					<input type="text" name="ftitle" id="ftitle" placeholder="title" /><br />
+					<label for="fauthor">Author:</label>
+					<input type="text" name="fauthor" id="fauthor" placeholder="author" /><br />
+					<label for="fpages">Number of Pages:</label>
+					<input type="number" name="fpages" id="fpages" placeholder="pages" /><br />
+					<label for="fread">Have you read this book?</label>
+					<input type="checkbox" name="fread" id="fread" ><br />
+					<input type="submit" name="" value="Submit" id="submit" />
+				</fieldset>
+			</form>
+		</div>
+		
+		<div id="library"></div>
+	
+
+	</div>
+	
+<script src="script.js" type="text/javascript"></script>
+</body>
+</html>
