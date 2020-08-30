@@ -4,14 +4,22 @@ body {
 
 #library {
 	display: flex;
+	flex-wrap: wrap;
 	background: orange;
+
 }
 
 .book {
-	display: flex;
-	justify-content: space-around;
+	border-radius: 2vw;
+	width: 30vw;
+	padding: 0 2vh 2vh 2vh;
+	margin: 2vw;
+}
+
+#library h1 {
+	background-color: black;
+	color: white;
 	padding: 2vh;
-	margin
 }
 
 button {
