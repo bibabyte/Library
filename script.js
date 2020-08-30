@@ -87,31 +87,31 @@ function render() {
 		
 		let newDiv = document.createElement('div');
 		let newTitle = document.createElement('h1');
+		let newAuthor = document.createElement('p');
+		let newPages = document.createElement('p');
+		let newRead = document.createElement('button');
+		let delBook = document.createElement('button');
 		library.appendChild(newDiv);
-		newDiv.appendChild(newTitle)
+		newDiv.appendChild(newTitle);
+		newDiv.appendChild(newAuthor);
+		newDiv.appendChild(newPages);
+		newDiv.appendChild(newRead);
+		newDiv.appendChild(delBook);
 		newDiv.style.backgroundColor = randomColor();
 		newDiv.className = 'book';
 		newTitle.textContent = `${book.title}`;
-		
-		
-
-		
+		newAuthor.textContent = `by ${book.author}`;
+		newPages.textContent = `${book.pages} pages`;
+		if (book.read) {
+			newRead.textContent = 'Read';
+		}else {
+			newRead.textContent = 'Not Read';
+		}
+		delBook.textContent = 'Delete';
 	}
-	//console.log(myLibrary[i][title]);
-	
-	/*
-	for each item in myLibrary:
-		create new *div*
-			div header: title
-			div includes: 
-				title, pages.
-			div has buttons:
-				read?, delete
-		
-				
-		MUST create funcitons for div buttons
-	*/
 }
+
+
 render();
 
 
@@ -128,7 +128,7 @@ function randomColor() {
 
 Render
 	Currently titles appear. 
-	make all of it appear.
+
 	
 Display
 	make everything look good
