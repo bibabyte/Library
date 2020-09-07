@@ -5,7 +5,7 @@ const bookForm = document.querySelector('#newBook');
 
 // An array to store each card
 let myLibrary = [];
-let card, newTitle, newAuthor, newPages, newRead, delBook;
+
 
 
 // Add book button
@@ -24,22 +24,22 @@ addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen')
 
 
 //=========TESTING=========\\
-let prince = new Book('The Little Prince', 'Antoine de Saint-Exupery', 37, 0, 0);
+let prince = createBook('The Little Prince', 'Antoine de Saint-Exupery', 37, 0, 0);
 
-let gatsby = new Book('The Great Gatsby', 'F. Scott Fitzgerald', 197, 1, 1);
+let gatsby = createBook('The Great Gatsby', 'F. Scott Fitzgerald', 197, 1, 1);
 myLibrary.push(prince, gatsby)
 //=========================\\
 
 
 
 // Book constructor and prototype funcitons
-function Book(title, author, pages, read, index){
+/*function Book(title, author, pages, read, index){
 	this.title = title;
 	this.author = author;
 	this.pages = pages;
 	this.read = read;
 	this.dataIndex = index;
-}
+}*/
 
 // Book.prototype.toggleRead = function() {
 // 	let index = this.dataIndex;
@@ -51,10 +51,21 @@ function Book(title, author, pages, read, index){
 // 	render();
 // }
 
-Book.prototype.about = function() {
+/*Book.prototype.about = function() {
 	return (`${title} by ${author}, ${pages} pages, ${read}`);
 }
+*/
+// FACTORY FUNCTION
+function createBook(title, author, pages, read, index) {
+	var book = Object.create(createBook.prototype);
+	return {title, author, pages, read, index };
+}
 
+createBook.prototype.about = function () {
+		return(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`);
+	}
+
+	
 // =====
 
 
@@ -71,8 +82,9 @@ function addBooktoLibrary() {
 	// Find index number through myLibrary array
 	let index = myLibrary.length;
 	
-	// Create Book object
-	let book = new Book(title, author, pages, read, index);
+	// Create Book object - `new Book` uses CONSTRUCTOR - `createBook` uses FACTORY FUNCTION
+//	let book = new Book(title, author, pages, read, index);
+	let book = createBook(title, author, pages, read, index);
 	
 	// Add book to myLibrary
 	myLibrary.push(book); 
@@ -96,19 +108,36 @@ function render() {
 		library.removeChild(library.lastChild);
 	}
 	
+	let card, newTitle, newAuthor, newPages, newRead, delBook;
+	
 	// Display each book in myLibrary
 	//for (book of myLibrary) {
 	myLibrary.forEach(function (book) {
-			console.log(book.title + '...' + book.dataIndex);
+			console.log(book.title + '...' + book.index);
 		card = document.createElement('div');
 		newTitle = document.createElement('h1');
 		newAuthor = document.createElement('p');
 		newPages = document.createElement('p');
 		newRead = document.createElement('button');
+		newRead.addEventListener('click', function () {
+			if (book.read == 1) {
+				book.read = 0;
+				render();
+				return;
+			}
+			book.read = 1;
+			newRead.textContent = 'Read';
+			render();
+			// Is calling render the cleanest, simplist way to do this? It seems overkill to remove and add again all books.
+		})
 		delBook = document.createElement('button');
-		delBook.addEventListener('click', deleteBook);
-		//(e) => {myLibrary.splice(myLibrary.indexOf(book), 1);card.remove();
-		//});		
+		delBook.addEventListener('click', function () {
+			if (confirm(`Do you want to delete ` + book.title + ` from your library?`)) {
+			myLibrary.splice(book.index, 1);
+			// is there a need to change indexes so there's no numerical gap?
+			render();
+			}
+		});
 		library.appendChild(card);
 		card.appendChild(newTitle);
 		card.appendChild(newAuthor);
@@ -133,16 +162,8 @@ function render() {
 }
 
 
-function deleteBook(book, index) {
-	//document.getElementById('test').textContent += `book is ${book} .... index is ${index}`;
-	if (confirm(`Do you want to delete ${myLibrary[index]} from your library?`)) {
-		myLibrary.splice(index, 1);
-		card.remove();
-		console.log(myLibrary);
-		render();
-	}
-}
-// delBook.addEventListener('click', console.log('clicked'));
+
+
 
 function randomColor() {
 	let r = Math.floor(Math.random() * 256);
@@ -153,6 +174,9 @@ function randomColor() {
 
 // Stored books auto-populate
 render();
+
+
+// Toggle READ
 
 
 
@@ -204,3 +228,16 @@ render();
 // 		return
 // 	}
 // }
+
+
+
+
+
+/*///=====NOTES======\\\\*\
+to call a HTML element in JS:
+	$('element')
+		e.g.: $('body').on('click', function...)
+		https://m.youtube.com/watch?v=fjJoX9F_F5g
+			minute 6
+		/*/
+		
