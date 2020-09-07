@@ -105,6 +105,7 @@ function render() {
 			newRead.textContent = 'Read';
 			render();
 			// Is calling render the cleanest, simplist way to do this? It seems overkill to remove and add again all books.
+			// I'd like to get this to reference a toggle funciton in the Book creator funciton...is this posible with factory (vs constructor?) - see TOP instructions 6.1
 		})
 		delBook = document.createElement('button');
 		delBook.addEventListener('click', function () {
@@ -160,10 +161,11 @@ render();
 //========NOTES========\\
 /*
 
-	
+	Local Storage
+	Make it look good.
 
 
-//*/
+*/
 
 
 
