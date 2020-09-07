@@ -33,28 +33,6 @@ myLibrary.push(prince, gatsby)
 
 
 // Book constructor and prototype funcitons
-/*function Book(title, author, pages, read, index){
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.read = read;
-	this.dataIndex = index;
-}*/
-
-// Book.prototype.toggleRead = function() {
-// 	let index = this.dataIndex;
-// 	if (myLibrary[index].read) {
-// 		myLibrary[index].read = 0;
-// 	}else {
-// 		myLibrary[index].read = 1;
-// 	};
-// 	render();
-// }
-
-/*Book.prototype.about = function() {
-	return (`${title} by ${author}, ${pages} pages, ${read}`);
-}
-*/
 // FACTORY FUNCTION
 function createBook(title, author, pages, read, index) {
 	var book = Object.create(createBook.prototype);
@@ -82,8 +60,7 @@ function addBooktoLibrary() {
 	// Find index number through myLibrary array
 	let index = myLibrary.length;
 	
-	// Create Book object - `new Book` uses CONSTRUCTOR - `createBook` uses FACTORY FUNCTION
-//	let book = new Book(title, author, pages, read, index);
+	// Create Book object 
 	let book = createBook(title, author, pages, read, index);
 	
 	// Add book to myLibrary
@@ -111,7 +88,6 @@ function render() {
 	let card, newTitle, newAuthor, newPages, newRead, delBook;
 	
 	// Display each book in myLibrary
-	//for (book of myLibrary) {
 	myLibrary.forEach(function (book) {
 			console.log(book.title + '...' + book.index);
 		card = document.createElement('div');
@@ -183,51 +159,11 @@ render();
 
 //========NOTES========\\
 /*
-	deleteBook
-		Currently
-			code is deep in the render() function.
-			The problem persists that the item deleted is the LAST item in the array.
-			*card.remove is GREAT => don't have to remove and re-render all the cards!
-			still unsure how to get the index of the current delete button.
-				Maybe there's something in creating an iterator and adding an ID to each delete button as they're created?
-				This would have to be the same for read...?
-			need to get the display to confirm deletion up and runing too.
-			
-			WEIRDSHIT:
-				card.remove removes LAST card
-						(only seems to remove the one, another card won't be removed)
-				while
-				splice removes FIRST book.
-			  Currently we're left with a ever shrinking array (item[0] gets removed)
-			  	while item[-1] seems to be removed on the first iteration and NONE thereafter.
-				This junk is messed up!
-			  RENDER
-			  	gives a more true view of what is being deleted
-			  ALSO
-				Objects keep their index even when another object is removed.
-			
-	toggle read
-		in limbo
-		
+
 	
 
 
 //*/
-//button.addEventListener('click', listener, useCapture)
-
-// function buttonClick() {
-// 	if (button.getElementById == 'delBook') {
-// 		deleteBook();
-// 		return;
-		
-// 	}else if (button.getElementById == 'newRead') {
-// 		toggleRead();
-// 		return;
-// 	}else if (button.getElementById == 'addBookBtn') {
-// 		addBooktoLibrary();
-// 		return
-// 	}
-// }
 
 
 
