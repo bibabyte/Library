@@ -7,6 +7,7 @@ const bookForm = document.querySelector('#newBook');
 let myLibrary = [];
 
 
+//checkLocalStorage();
 
 // Add book button
 const addBookBtn = document.createElement('button');
@@ -20,6 +21,44 @@ bookForm.classList.toggle('formHidden');
 addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
 // Hiding form after submission is in addBooktoLibrary() function
 
+//====== STORAGE =====\\
+
+// Function to determine if storage is available (to use Local Storage)
+// for information on this code see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+	var storage;
+	try {
+		storage = window[type];
+		var x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.removeItem(x);
+		return true;
+	}
+	catch(e) {
+		return e instanceof DOMException && (
+		e.code === 22 ||
+		e.code === 1014 ||
+		e.name === 'QuotaExceedError' ||
+		e.name === 'NS_ERROR_DOM_QUOTA_REACHED' ) &&
+		(storage && storage.length !== 0);
+	}
+}
+
+// Run test for local storage - log in console.
+if (storageAvailable('localStorage')) {
+//	console.log('Local Storage Available');
+} else {
+//	console.log('no local storage');
+}
+
+// More storage
+if (localStorage.getItem('myLibrary')) {
+	myLibrary.push('myLibrary');
+} else {
+//	console.log('nothing in storage yet');
+}
+
+// Populate Storage within render function
 
 
 
@@ -70,6 +109,7 @@ function addBooktoLibrary() {
 	bookForm.classList.remove('formOpen');
 	
 	//CLEAR FORM
+		// MODIFY: create a class for all, iterate through the class clearing text/value in for loop.
 	document.querySelector('#fauthor').value = '';
 	document.querySelector('#ftitle').value = '';
 	document.querySelector('#fpages').value = '';
@@ -85,24 +125,25 @@ function render() {
 		library.removeChild(library.lastChild);
 	}
 	
-	let card, newTitle, newAuthor, newPages, newRead, delBook;
+	let card, newTitle, newAuthor, newPages, readBtn, delBook;
+	
 	
 	// Display each book in myLibrary
-	myLibrary.forEach(function (book) {
-			console.log(book.title + '...' + book.index);
+	myLibrary.forEach( (book) => {
+//			console.log(book.title + '...' + book.index);
 		card = document.createElement('div');
 		newTitle = document.createElement('h1');
 		newAuthor = document.createElement('p');
 		newPages = document.createElement('p');
-		newRead = document.createElement('button');
-		newRead.addEventListener('click', function () {
+		readBtn = document.createElement('button');
+		readBtn.addEventListener('click', function () {
 			if (book.read == 1) {
 				book.read = 0;
 				render();
 				return;
 			}
 			book.read = 1;
-			newRead.textContent = 'Read';
+			// readBtn.textContent = 'Read';
 			render();
 			// Is calling render the cleanest, simplist way to do this? It seems overkill to remove and add again all books.
 			// I'd like to get this to reference a toggle funciton in the Book creator funciton...is this posible with factory (vs constructor?) - see TOP instructions 6.1
@@ -115,11 +156,12 @@ function render() {
 			render();
 			}
 		});
+		populateStorage();
 		library.appendChild(card);
 		card.appendChild(newTitle);
 		card.appendChild(newAuthor);
 		card.appendChild(newPages);
-		card.appendChild(newRead);
+		card.appendChild(readBtn);
 		card.appendChild(delBook);
 		card.style.backgroundColor = randomColor();
 		card.className = 'book';
@@ -127,18 +169,32 @@ function render() {
 		newAuthor.textContent = `by ${book.author}`;
 		newPages.textContent = `${book.pages} pages`;
 		if (book.read) {
-			newRead.textContent = 'Read';
+			readBtn.textContent = 'Read';
 		}else {
-			newRead.textContent = 'Not Read';
+			readBtn.textContent = 'Not Read';
 		}
 		delBook.textContent = 'Delete';
+		// Storage
 		
+		
+		populateStorage();
 	});
 	
-	
+	checkLocalStorage();
 }
 
+function checkLocalStorage() {
+	console.log("=== LOCAL STORAGE ===");
+	for (i = 0; i < localStorage.length; i++)   {
+    console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
+	}
+	console.log('-------');
+}
 
+function populateStorage() {
+	localStorage.clear();
+	localStorage.setItem('library', JSON.stringify(myLibrary));
+}
 
 
 
@@ -150,7 +206,12 @@ function randomColor() {
 }
 
 // Stored books auto-populate
-render();
+if(localStorage.getItem('library')) {
+	myLibrary = JSON.parse(localStorage.getItem('library'));
+	render();
+} else {
+	alert('start here');	
+}
 
 
 // Toggle READ
