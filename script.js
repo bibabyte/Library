@@ -9,8 +9,6 @@ const buttons = document.querySelector('#buttons');
 let myLibrary = [];
 
 
-//checkLocalStorage();
-
 // Add book button
 const addBookBtn = document.createElement('button');
 addBookBtn.className = 'button';
@@ -30,7 +28,7 @@ if (localStorage.length == 0) {
 	welcome.classList.add('hidden');
 }
 
-//====== STORAGE =====\\
+// Populate cards if a library is stored
 
 if (localStorage.getItem('myLibrary')) {
 	myLibrary.push('myLibrary');
@@ -51,14 +49,6 @@ function createBook(title, author, pages, read, index) {
 	var book = Object.create(createBook.prototype);
 	return {title, author, pages, read, index };
 }
-
-createBook.prototype.about = function () {
-		return(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`);
-	}
-
-	
-// =====
-
 
 
 // Create a book from the form, add it to myLibrary array and localStorage
@@ -115,6 +105,7 @@ function render() {
 		newTitle = document.createElement('h1');
 		newAuthor = document.createElement('p');
 		newPages = document.createElement('p');
+		newBtnDiv = document.createElement('div');
 		readBtn = document.createElement('button');
 		readBtn.addEventListener('click', function () {
 			if (book.read == 1) {
@@ -148,24 +139,25 @@ function render() {
 		card.appendChild(newTitle);
 		card.appendChild(newAuthor);
 		card.appendChild(newPages);
-		card.appendChild(readBtn);
-		card.appendChild(delBook);
+		card.appendChild(newBtnDiv);
+		newBtnDiv.appendChild(readBtn);
+		newBtnDiv.appendChild(delBook);
 		card.style.backgroundColor = randomColor();
 		card.className = 'book';
+		newBtnDiv.className = 'cardButtons';
 		newTitle.textContent = book.title;
 		newAuthor.textContent = `by ${book.author}`;
 		newPages.textContent = `${book.pages} pages`;
 		if (book.read) {
 			readBtn.textContent = 'Read';
+			readBtn.className = 'read';
 		}else {
 			readBtn.textContent = 'Not Read';
+			readBtn.className = 'notRead';
 		}
 		delBook.textContent = 'Delete';
-		
-		// Storage
-		populateStorage();
+		delBook.className = 'delete';		
 	});
-	
 }
 
 function populateStorage() {
@@ -176,13 +168,38 @@ function displayStorage() {
 	console.log(localStorage.getItem('library'));
 }
 
-
 function randomColor() {
+	let random = Math.floor(Math.random() * 5) + 5;
+	let prefix = '--color';
+	let number;
+	switch (random) {
+		case 5:
+			number = '5';
+			break;
+		case 6:
+			number = '6';
+			break;
+		case 7:
+			number = '7';
+			break;
+		case 8:
+			number = '8';
+			break;
+		case 9:
+			number = '9';
+			break;
+	}
+	let variable = prefix.concat(number);
+	return getComputedStyle(body).getPropertyValue(variable);
+}
+
+
+/*function randomColor() {
 	let r = Math.floor(Math.random() * 256);
 	let g = Math.floor(Math.random() * 256);
 	let b = Math.floor(Math.random() * 256);
 	return `rgb(${r},${g},${b})`;
-}
+}*/
 
 // Stored books auto-populate
 if(localStorage.getItem('library')) {
@@ -200,10 +217,18 @@ if(localStorage.getItem('library')) {
 
 //========NOTES========\\
 /*
-
-	Local Storage
 	Make it look good.
-
+	When library is populated 
+		top of page says "My Library"
+			*Personalized option
+		add book moves to the right corner
+		menu in left corner
+			personalize
+			about
+			sort
+		sort ability
+			sort by title, author, pages, read
+		thumbnails
 
 */
 
