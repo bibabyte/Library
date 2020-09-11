@@ -1,25 +1,24 @@
 body {
 	margin: none;
 	font-family: 'Montserrat', helvetica, sans-serif;
-	--mainColor02: #3F48A0;
-	--mainColor01: #5C64B9;
-	--mainColor0: #8189D3;
-	--mainColor-1: #ACB2E9;
-	--mainColor-2: #DADDF8;
-	
-	--secondColor02: #2F9F6F;
-	--secondColor01: #4DB88A;
-	--secondColor0: #74D2AA;
-	--secondColor-1: #A3E8CA;
-	--secondColor-2: #D6F8E9;
-
-	--thirdColor02: #823199;
-	--thirdColor01: #9C4EB2;
-	--thirdColor0: #BB75CF;
-	--thirdColor-1: #D8A4E6;
-	--thirdColor-2: #F0D6F8;	
+	--color1: #FB846B;
+	--color2: #2C8DE6;
+	--color3: #64A8E6;
+	--color4: #FBB9AB;
+	--color5: #BAD1E6;
+	--color6: #F3F0F2;
+	--color7: #F7E9E4;
+	--color8: #D4E4F2;
+	--color9: #E7EDF7;
+	--color-1: #414141;
+	--color-2: #918986;
 }
 
+button {
+	font-family: 'Montserrat', helvetica, sans-serif;
+	font-size: .7em;
+	background: pink;
+}
 
 
 #welcome {
@@ -27,46 +26,75 @@ body {
 	padding-right: 3vw;
 	padding-bottom: 3vw;
 	text-align: center;
-	color: var(--mainColor02);
+	color: var(--color2);
 }
 
 h1 {
 	font-family: 'Poiret One', helvetica, sans-serif;
-	color: var(--mainColor01);
+	color: var(--color1);
 }
 
 .book {
-	border-radius: 2vw;
-	width: 30vw;
+	border-radius: 1vw;
+	width: 40vw; /*mobile only*/
+	height: 45vw; /*mobile only*/
 	margin: 2vw;
+	padding: 1vw;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	align-content: space-around;
+	justify-content: space-around;
+	
 }
+
+.book p {
+	margin: 0;
+}
+
+.cardButtons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.cardButtons button {
+	border-radius: 1vw;
+	padding: 1em;
+	flex: 1 0;
+
+}
+
+.notRead { background-color: #DCDADB; }
+.read { background-color: white; }
+.delete { background-color: #FBB9AB; }
 
 #library {
 	display: flex;
 	flex-wrap: wrap;
-	background: orange;
-
+	justify-content: space-around;
 }
 
 #library h1 {
 	background-color: black;
 	color: white;
-	padding: 2vh;
+	padding: 1.5vw;
+	margin: -1vw;
 }
 
 #buttons {
 	
 	display: flex;
 	justify-content: center;
-	
+
 }
 
 #buttons button {
 	font-family: 'Playfair Display', helcetica, sans-serif;
 	padding: 2vw;
-	background-color: var(--secondColor-1);
-	border: 4px solid var(--mainColor0);
-	color: var(--mainColor01);
+	background-color: var(--color6);
+	border: 4px solid var(--color4);
+	color: var(--color2);
 	font-size: 1em;
 	box-shadow: 0px 3px 5px #AAA;
 	font-weight: bold;
@@ -86,17 +114,37 @@ h1 {
 }
 
 .formHidden { visibility: hidden; }
-
 .formOpen {	visibility: visible; }
 
 .hidden { display: none; }
 .unhidden { display: block; }
 
 form {
-	background: white;
+	background: var(--color8);
 	padding: 3vh;
 	border-radius: 1vh;
+	box-shadow: 0px 3px 5px #333;
+	display: flex;
+	justify-content: flex-end;
+}
 
+label {
+	line-height: 2;
+}
+
+
+input[type=submit] {
+	background-color: var(--color1);
+	color: var(--color-1);
+	border: 0;
+	padding: 2em;
+	font-size: 1em;
+	font-family: 'Montserrat';
+	flex-grow: 1;
+}
+
+input {
+	background-color: var(--color7);
 }
 
 legend {
