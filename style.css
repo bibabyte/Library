@@ -1,5 +1,44 @@
 body {
 	margin: none;
+	font-family: 'Montserrat', helvetica, sans-serif;
+	--mainColor02: #3F48A0;
+	--mainColor01: #5C64B9;
+	--mainColor0: #8189D3;
+	--mainColor-1: #ACB2E9;
+	--mainColor-2: #DADDF8;
+	
+	--secondColor02: #2F9F6F;
+	--secondColor01: #4DB88A;
+	--secondColor0: #74D2AA;
+	--secondColor-1: #A3E8CA;
+	--secondColor-2: #D6F8E9;
+
+	--thirdColor02: #823199;
+	--thirdColor01: #9C4EB2;
+	--thirdColor0: #BB75CF;
+	--thirdColor-1: #D8A4E6;
+	--thirdColor-2: #F0D6F8;	
+}
+
+
+
+#welcome {
+	padding-left: 3vw;
+	padding-right: 3vw;
+	padding-bottom: 3vw;
+	text-align: center;
+	color: var(--mainColor02);
+}
+
+h1 {
+	font-family: 'Poiret One', helvetica, sans-serif;
+	color: var(--mainColor01);
+}
+
+.book {
+	border-radius: 2vw;
+	width: 30vw;
+	margin: 2vw;
 }
 
 #library {
@@ -9,21 +48,28 @@ body {
 
 }
 
-.book {
-	border-radius: 2vw;
-	width: 30vw;
-
-	margin: 2vw;
-}
-
 #library h1 {
 	background-color: black;
 	color: white;
 	padding: 2vh;
 }
 
-button {
+#buttons {
 	
+	display: flex;
+	justify-content: center;
+	
+}
+
+#buttons button {
+	font-family: 'Playfair Display', helcetica, sans-serif;
+	padding: 2vw;
+	background-color: var(--secondColor-1);
+	border: 4px solid var(--mainColor0);
+	color: var(--mainColor01);
+	font-size: 1em;
+	box-shadow: 0px 3px 5px #AAA;
+	font-weight: bold;
 }
 
 #newBook {
@@ -39,18 +85,23 @@ button {
 	justify-content: center;
 }
 
-.formHidden {
-	visibility: hidden;
-}
+.formHidden { visibility: hidden; }
 
+.formOpen {	visibility: visible; }
 
-.formOpen {
-	visibility: visible;
-}
+.hidden { display: none; }
+.unhidden { display: block; }
 
 form {
 	background: white;
 	padding: 3vh;
 	border-radius: 1vh;
+
 }
 
+legend {
+	font-family: 'Poiret One', helvetica, sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	padding-bottom: .5em;
+}
