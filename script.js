@@ -2,6 +2,8 @@
 const library = document.querySelector('#library');
 const body = document.querySelector('#body');
 const bookForm = document.querySelector('#newBook');
+const welcome = document.querySelector('#welcome');
+const buttons = document.querySelector('#buttons');
 
 // An array to store each card
 let myLibrary = [];
@@ -13,7 +15,7 @@ let myLibrary = [];
 const addBookBtn = document.createElement('button');
 addBookBtn.className = 'button';
 addBookBtn.textContent = 'Add a Book';
-body.appendChild(addBookBtn);
+buttons.appendChild(addBookBtn);
 
 
 // Form hidden/visible
@@ -21,58 +23,30 @@ bookForm.classList.toggle('formHidden');
 addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
 // Hiding form after submission is in addBooktoLibrary() function
 
+// Show Welcome if no books are in storage
+if (localStorage.length == 0) {
+	welcome.removeAttribute('hidden');
+} else {
+	welcome.classList.add('hidden');
+}
+
 //====== STORAGE =====\\
 
-// Function to determine if storage is available (to use Local Storage)
-// for information on this code see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-function storageAvailable(type) {
-	var storage;
-	try {
-		storage = window[type];
-		var x = '__storage_test__';
-		storage.setItem(x, x);
-		storage.removeItem(x);
-		return true;
-	}
-	catch(e) {
-		return e instanceof DOMException && (
-		e.code === 22 ||
-		e.code === 1014 ||
-		e.name === 'QuotaExceedError' ||
-		e.name === 'NS_ERROR_DOM_QUOTA_REACHED' ) &&
-		(storage && storage.length !== 0);
-	}
-}
-
-// Run test for local storage - log in console.
-if (storageAvailable('localStorage')) {
-//	console.log('Local Storage Available');
-} else {
-//	console.log('no local storage');
-}
-
-// More storage
 if (localStorage.getItem('myLibrary')) {
 	myLibrary.push('myLibrary');
-} else {
-//	console.log('nothing in storage yet');
 }
-
-// Populate Storage within render function
 
 
 
 //=========TESTING=========\\
-let prince = createBook('The Little Prince', 'Antoine de Saint-Exupery', 37, 0, 0);
+/*let prince = createBook('The Little Prince', 'Antoine de Saint-Exupery', 37, 0, 0);
 
 let gatsby = createBook('The Great Gatsby', 'F. Scott Fitzgerald', 197, 1, 1);
-myLibrary.push(prince, gatsby)
+myLibrary.push(prince, gatsby)*/
 //=========================\\
 
 
-
-// Book constructor and prototype funcitons
-// FACTORY FUNCTION
+// Create books with FACTORY FUNCTION
 function createBook(title, author, pages, read, index) {
 	var book = Object.create(createBook.prototype);
 	return {title, author, pages, read, index };
@@ -87,7 +61,7 @@ createBook.prototype.about = function () {
 
 
 
-// Create a book from the form, add it to myLibrary array
+// Create a book from the form, add it to myLibrary array and localStorage
 function addBooktoLibrary() {
 	
 	// Collect data from form
@@ -103,10 +77,12 @@ function addBooktoLibrary() {
 	let book = createBook(title, author, pages, read, index);
 	
 	// Add book to myLibrary
-	myLibrary.push(book); 
+	myLibrary.push(book);
+	populateStorage();	
 	
 	// Hide form
 	bookForm.classList.remove('formOpen');
+	
 	
 	//CLEAR FORM
 		// MODIFY: create a class for all, iterate through the class clearing text/value in for loop.
@@ -114,23 +90,27 @@ function addBooktoLibrary() {
 	document.querySelector('#ftitle').value = '';
 	document.querySelector('#fpages').value = '';
 	document.querySelector('#fread').value = '';
+	
+	// Populate cards
+	
 	render();
+	
 }
 
 
 // Display books on screen
 function render() {
+	welcome.classList.add('hidden');
 	// Remove exisiting nodes from the display to allow a full repopulation below
 	while (library.hasChildNodes()){
 		library.removeChild(library.lastChild);
-	}
+	} 
 	
 	let card, newTitle, newAuthor, newPages, readBtn, delBook;
 	
 	
 	// Display each book in myLibrary
 	myLibrary.forEach( (book) => {
-//			console.log(book.title + '...' + book.index);
 		card = document.createElement('div');
 		newTitle = document.createElement('h1');
 		newAuthor = document.createElement('p');
@@ -143,7 +123,6 @@ function render() {
 				return;
 			}
 			book.read = 1;
-			// readBtn.textContent = 'Read';
 			render();
 			// Is calling render the cleanest, simplist way to do this? It seems overkill to remove and add again all books.
 			// I'd like to get this to reference a toggle funciton in the Book creator funciton...is this posible with factory (vs constructor?) - see TOP instructions 6.1
@@ -151,9 +130,17 @@ function render() {
 		delBook = document.createElement('button');
 		delBook.addEventListener('click', function () {
 			if (confirm(`Do you want to delete ` + book.title + ` from your library?`)) {
-			myLibrary.splice(book.index, 1);
+				if (myLibrary.length <= 1) {
+					myLibrary = [];
+					localStorage.clear();
+					welcome.className = (welcome.className=='hidden') ? 'unhidden' : 'hidden';
+					
+				} else {
+					myLibrary.splice(book.index, 1);
+				}
 			// is there a need to change indexes so there's no numerical gap?
-			render();
+			
+				render();
 			}
 		});
 		populateStorage();
@@ -174,28 +161,20 @@ function render() {
 			readBtn.textContent = 'Not Read';
 		}
 		delBook.textContent = 'Delete';
+		
 		// Storage
-		
-		
 		populateStorage();
 	});
 	
-	checkLocalStorage();
-}
-
-function checkLocalStorage() {
-	console.log("=== LOCAL STORAGE ===");
-	for (i = 0; i < localStorage.length; i++)   {
-    console.log(localStorage.key(i) + "=[" + localStorage.getItem(localStorage.key(i)) + "]");
-	}
-	console.log('-------');
 }
 
 function populateStorage() {
-	localStorage.clear();
 	localStorage.setItem('library', JSON.stringify(myLibrary));
 }
 
+function displayStorage() {
+	console.log(localStorage.getItem('library'));
+}
 
 
 function randomColor() {
@@ -209,10 +188,10 @@ function randomColor() {
 if(localStorage.getItem('library')) {
 	myLibrary = JSON.parse(localStorage.getItem('library'));
 	render();
-} else {
-	alert('start here');	
 }
 
+
+//localStorage.clear();
 
 // Toggle READ
 
