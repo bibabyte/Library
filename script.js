@@ -12,7 +12,9 @@ const add = document.querySelector('#add');
 
 
 // buttons.classList.add('hasLib');
-buttons.className = 'hasLib';
+//buttons.className = 'hasLib';
+welcomeBtns.classList.add('welcomeBtns');
+populated.classList.add('populated');
 
 // An array to store each card
 let myLibrary = [];
@@ -65,9 +67,9 @@ myLibrary.push(prince, gatsby)*/
 
 
 // Create books with FACTORY FUNCTION
-function createBook(title, author, pages, read, index) {
+function createBook(title, author, pages, read, index, color) {
 	var book = Object.create(createBook.prototype);
-	return {title, author, pages, read, index };
+	return {title, author, pages, read, index, color};
 }
 
 
@@ -83,8 +85,11 @@ function addBooktoLibrary() {
 	// Find index number through myLibrary array
 	let index = myLibrary.length;
 	
+	// Assign random color
+	let color = randomColor();
+	
 	// Create Book object 
-	let book = createBook(title, author, pages, read, index);
+	let book = createBook(title, author, pages, read, index, color);
 	
 	// Add book to myLibrary
 	myLibrary.push(book);
@@ -153,15 +158,10 @@ function render() {
 				if (myLibrary.length <= 1) {
 					myLibrary = [];
 					localStorage.clear();
-				/*	welcome.classList.remove('hidden');*/
-				welcome.classList.add('unhidden');
-					//welcome.classList.add((welcome.classList=='hidden') ? 'unhidden' : 'hidden');
-					console.log(welcome.classList);
+					welcome.classList.add('unhidden');
 				} else {
 					myLibrary.splice(book.index, 1);
 					welcome.classList.add('hidden');
-					//welcome.classList.add((welcome.classList=='unhidden') ? 'hidden' : 'hidden');
-					console.log(welcome.classList);
 				}
 			// is there a need to change indexes so there's no numerical gap?
 			
@@ -176,7 +176,7 @@ function render() {
 		card.appendChild(newBtnDiv);
 		newBtnDiv.appendChild(readBtn);
 		newBtnDiv.appendChild(delBook);
-		card.style.backgroundColor = randomColor();
+		card.style.backgroundColor = book.color;
 		card.className = 'book';
 		newBtnDiv.className = 'cardButtons';
 		newTitle.textContent = book.title;
@@ -234,13 +234,11 @@ function populatedButtons() {
 	welcomeBtns.classList.add('hidden');
 	populated.classList.remove('hidden');
 	title.textContent = 'My Library';
-	console.log('populatedButtons pop:' + populated.classList + ' wlc: ' + welcomeBtns.classList);
 }
 
 function welcomeButtons() {
 	welcomeBtns.classList.remove('hidden');
 	populated.classList.add('hidden');
-	console.log('welcomeButtons pop:' + populated.classList + ' wlc: ' + welcomeBtns.classList);
 	addBookBtn.textContent = 'Add a Book';
 	personalizeBtn.textContent = 'Personalize';
 	

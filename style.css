@@ -67,10 +67,8 @@ h1 {
 
 }
 
-.hasLib {
-	position: sticky;
-	display: flex;
-	justify-content: space-between;
+.add {
+	align-self: flex-end;
 }
 
 .add1 {
@@ -81,6 +79,7 @@ h1 {
 	transform: translate(0, 10px);
 	border-radius: 5px;
 }
+
 .add2 {
 	width: 30px;
 	height: 5px;
@@ -120,11 +119,6 @@ h1 {
 	transform: rotate(45deg) translate(-8px, -8px);
 }
 
-#buttons h1 {
-	margin: 0;
-	color: var(--color1);
-}
-
 .notRead { background-color: #DCDADB; }
 .read { background-color: white; }
 .delete { background-color: #FBB9AB; }
@@ -143,14 +137,14 @@ h1 {
 }
 
 
-#buttons {
-	
+.welcomeBtns {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
+	width: 100%;
 	margin: 0 2vw 0 2vw;
 }
 
-#buttons button {
+.welcomeBtns button {
 	font-family: 'Playfair Display', helcetica, sans-serif;
 	padding: 2vw;
 	background-color: var(--color6);
@@ -161,11 +155,27 @@ h1 {
 	font-weight: bold;
 }
 
-/*#populated {
+.populated {
+	display: flex;
 	justify-content: space-between;
-	margin: 0 2vw 0 2vw;
+	width: 96%;
+	padding: 0 2vw 2vw 2vw;
+	background-color: white;
 }
-*/#newBook {
+
+.populated h1 {
+	margin: 0;
+	color: var(--color1);
+}
+
+
+
+#buttons {
+	position: sticky;
+	top: 0;
+}
+
+#newBook {
 	position: fixed;
 	background-color: rgba(0,0,0,0.5);
 	z-index: 2;
