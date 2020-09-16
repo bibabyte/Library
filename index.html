@@ -15,7 +15,21 @@
 			<p>Just click 'add a book' to add your first one!</p>
 			<!-- <p>To create a profile and personalize the site click 'personalize.'</p> -->
 		</div>
-		<div id="buttons"></div>
+		<div id="buttons">
+			<div id="populated">
+				<div id="menu" onclick='menuChange(this)'>
+					<div class="menu1"></div>
+					<div class="menu2"></div>
+					<div class="menu3"></div>
+				</div>
+				<h1 id="title"></h1>
+				<div id="add">
+					<div class="add0"></div>
+					<div class="add1"></div>
+					<div class="add2"></div>
+				</div>
+			</div>
+		</div>
 		<div id="newBook">
 			<form onsubmit='addBooktoLibrary();return false' method="post" action="">
 				<fieldset>

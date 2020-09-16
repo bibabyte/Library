@@ -18,6 +18,7 @@ button {
 	font-family: 'Montserrat', helvetica, sans-serif;
 	font-size: .7em;
 	background: pink;
+	
 }
 
 
@@ -27,6 +28,7 @@ button {
 	padding-bottom: 3vw;
 	text-align: center;
 	color: var(--color2);
+	flex-direction: column;
 }
 
 h1 {
@@ -65,6 +67,64 @@ h1 {
 
 }
 
+.hasLib {
+	position: sticky;
+	display: flex;
+	justify-content: space-between;
+}
+
+.add1 {
+	width: 30px;
+	height: 5px;
+	background-color: var(--color4);
+	margin: 6px 0;
+	transform: translate(0, 10px);
+	border-radius: 5px;
+}
+.add2 {
+	width: 30px;
+	height: 5px;
+	background-color: var(--color4);
+	margin: 6px 0;
+	transform: rotate(90deg);
+	border-radius: 5px;
+}
+
+.menu {
+	display: inline-block;
+	align-self: flex-start;
+}
+
+.menu1, .menu2, .menu3 {
+	width: 35px;
+	height: 5px;
+	background-color: var(--color4);
+	margin: 6px 0;
+	border-radius: 5px;
+	-webkit-transition: 0.4s;
+	-moz-transition: 0.4s;
+	-ms-transition: 0.4s;
+	-o-transition: 0.4s;
+	transition: 0.4s;
+}
+
+.change .menu1 {
+	transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .menu2 {
+	opacity: 0;
+}
+
+.change .menu3 {
+	transform: rotate(45deg) translate(-8px, -8px);
+}
+
+#buttons h1 {
+	margin: 0;
+	color: var(--color1);
+}
+
 .notRead { background-color: #DCDADB; }
 .read { background-color: white; }
 .delete { background-color: #FBB9AB; }
@@ -82,11 +142,12 @@ h1 {
 	margin: -1vw;
 }
 
+
 #buttons {
 	
 	display: flex;
-	justify-content: center;
-
+	justify-content: space-between;
+	margin: 0 2vw 0 2vw;
 }
 
 #buttons button {
@@ -100,7 +161,11 @@ h1 {
 	font-weight: bold;
 }
 
-#newBook {
+/*#populated {
+	justify-content: space-between;
+	margin: 0 2vw 0 2vw;
+}
+*/#newBook {
 	position: fixed;
 	background-color: rgba(0,0,0,0.5);
 	z-index: 2;
@@ -117,7 +182,7 @@ h1 {
 .formOpen {	visibility: visible; }
 
 .hidden { display: none; }
-.unhidden { display: block; }
+.unhidden { display: flex; }
 
 form {
 	background: var(--color8);

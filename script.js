@@ -4,35 +4,55 @@ const body = document.querySelector('#body');
 const bookForm = document.querySelector('#newBook');
 const welcome = document.querySelector('#welcome');
 const buttons = document.querySelector('#buttons');
+const populated = document.querySelector('#populated');
+const welcomeBtns = document.createElement('div');
+const menu = document.querySelector('#menu');
+const title = document.querySelector('#title');
+const add = document.querySelector('#add');
+
+
+// buttons.classList.add('hasLib');
+buttons.className = 'hasLib';
 
 // An array to store each card
 let myLibrary = [];
 
 
+// Personalize button
+const personalizeBtn = document.createElement('button');
+personalizeBtn.className = 'button';
+buttons.appendChild(personalizeBtn);
+
 // Add book button
 const addBookBtn = document.createElement('button');
 addBookBtn.className = 'button';
-addBookBtn.textContent = 'Add a Book';
 buttons.appendChild(addBookBtn);
 
+
+
+buttons.appendChild(welcomeBtns);
+welcomeBtns.appendChild(personalizeBtn);
+welcomeBtns.appendChild(addBookBtn);
+populated.appendChild(menu);
+populated.appendChild(title);
+populated.appendChild(add);
 
 // Form hidden/visible
 bookForm.classList.toggle('formHidden');
 addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
 // Hiding form after submission is in addBooktoLibrary() function
+add.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
 
-// Show Welcome if no books are in storage
-if (localStorage.length == 0) {
-	welcome.removeAttribute('hidden');
+
+// Stored books auto-populate + show Welcome if no books are in storage + toggle buttons on load
+if(localStorage.getItem('library')) {
+	myLibrary = JSON.parse(localStorage.getItem('library'));
+	render();
 } else {
-	welcome.classList.add('hidden');
+	welcome.classList.remove('hidden');
+	welcomeButtons();
 }
 
-// Populate cards if a library is stored
-
-if (localStorage.getItem('myLibrary')) {
-	myLibrary.push('myLibrary');
-}
 
 
 
@@ -90,8 +110,17 @@ function addBooktoLibrary() {
 
 // Display books on screen
 function render() {
-	welcome.classList.add('hidden');
-	// Remove exisiting nodes from the display to allow a full repopulation below
+	// Toggle welcome and display buttons
+	if (myLibrary.length > 0) { 
+		welcome.classList.remove('unhidden');
+		welcome.classList.add('hidden');	
+		populatedButtons();
+	} else {
+		welcome.classList.toggle('hidden');
+		welcomeButtons();
+	}
+	
+	// Remove exisiting nodes from the display to allow a full repopulation below, 
 	while (library.hasChildNodes()){
 		library.removeChild(library.lastChild);
 	} 
@@ -124,10 +153,15 @@ function render() {
 				if (myLibrary.length <= 1) {
 					myLibrary = [];
 					localStorage.clear();
-					welcome.className = (welcome.className=='hidden') ? 'unhidden' : 'hidden';
-					
+				/*	welcome.classList.remove('hidden');*/
+				welcome.classList.add('unhidden');
+					//welcome.classList.add((welcome.classList=='hidden') ? 'unhidden' : 'hidden');
+					console.log(welcome.classList);
 				} else {
 					myLibrary.splice(book.index, 1);
+					welcome.classList.add('hidden');
+					//welcome.classList.add((welcome.classList=='unhidden') ? 'hidden' : 'hidden');
+					console.log(welcome.classList);
 				}
 			// is there a need to change indexes so there's no numerical gap?
 			
@@ -194,24 +228,43 @@ function randomColor() {
 }
 
 
-/*function randomColor() {
-	let r = Math.floor(Math.random() * 256);
-	let g = Math.floor(Math.random() * 256);
-	let b = Math.floor(Math.random() * 256);
-	return `rgb(${r},${g},${b})`;
-}*/
 
-// Stored books auto-populate
-if(localStorage.getItem('library')) {
-	myLibrary = JSON.parse(localStorage.getItem('library'));
-	render();
+
+function populatedButtons() {
+	welcomeBtns.classList.add('hidden');
+	populated.classList.remove('hidden');
+	title.textContent = 'My Library';
+	console.log('populatedButtons pop:' + populated.classList + ' wlc: ' + welcomeBtns.classList);
 }
 
+function welcomeButtons() {
+	welcomeBtns.classList.remove('hidden');
+	populated.classList.add('hidden');
+	console.log('welcomeButtons pop:' + populated.classList + ' wlc: ' + welcomeBtns.classList);
+	addBookBtn.textContent = 'Add a Book';
+	personalizeBtn.textContent = 'Personalize';
+	
+}
+
+/*function personalize() {
+	form = can enter:
+		name
+		color schemes
+			options
+			or self-designed
+				11 color options
+	store info in local storage under new array - 
+		have CSS call the colors from this storage
+	name gets put to 'my library'
+}*/
 
 //localStorage.clear();
 
 // Toggle READ
 
+function menuChange(x) {
+	x.classList.toggle('change');
+}
 
 
 
