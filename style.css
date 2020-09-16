@@ -72,21 +72,21 @@ h1 {
 }
 
 .add1 {
-	width: 5vw;
-	height: .8vw;
+	width: 35px;
+	height: 5px;
 	background-color: var(--color4);
-	margin: .8vw 0;
+	margin: 6px 0;
 	transform: translate(0, 10px);
-	border-radius: .5vw;
+	border-radius: 5px;
 }
 
 .add2 {
-	width: 5vw;
-	height: .8vw;
+	width: 35px;
+	height: 5px;
 	background-color: var(--color4);
-	margin: .8vw 0;
+	margin: 6px 0;
 	transform: rotate(90deg);
-	border-radius: .5vw;
+	border-radius: 5px;
 }
 
 .menu {
@@ -95,11 +95,11 @@ h1 {
 }
 
 .menu1, .menu2, .menu3 {
-	width: 5vw;
-	height: .8vw;
+	width: 35px;
+	height: 5px;
 	background-color: var(--color4);
-	margin: .8vw 0;
-	border-radius: .5vw;
+	margin: 6px 0;
+	border-radius: 5px;
 	-webkit-transition: 0.4s;
 	-moz-transition: 0.4s;
 	-ms-transition: 0.4s;
@@ -159,7 +159,7 @@ h1 {
 	display: flex;
 	justify-content: space-between;
 	width: 96%;
-	padding: 0 2vw 2vw 2vw;
+	padding: 1vw 2vw 1vw 2vw;
 	background-color: white;
 }
 

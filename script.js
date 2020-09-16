@@ -56,16 +56,6 @@ if(localStorage.getItem('library')) {
 }
 
 
-
-
-//=========TESTING=========\\
-/*let prince = createBook('The Little Prince', 'Antoine de Saint-Exupery', 37, 0, 0);
-
-let gatsby = createBook('The Great Gatsby', 'F. Scott Fitzgerald', 197, 1, 1);
-myLibrary.push(prince, gatsby)*/
-//=========================\\
-
-
 // Create books with FACTORY FUNCTION
 function createBook(title, author, pages, read, index, color) {
 	var book = Object.create(createBook.prototype);
@@ -160,11 +150,15 @@ function render() {
 					localStorage.clear();
 					welcome.classList.add('unhidden');
 				} else {
-					myLibrary.splice(book.index, 1);
+					let idx = book.index
+					myLibrary.splice(idx, 1);
 					welcome.classList.add('hidden');
-				}
-			// is there a need to change indexes so there's no numerical gap?
-			
+					myLibrary.forEach((book) => {
+						if (book.index > idx) {
+							book.index--;
+						}
+					})
+				}			
 				render();
 			}
 		});
