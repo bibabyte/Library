@@ -22,12 +22,10 @@ let myLibrary = [];
 
 // Personalize button
 const personalizeBtn = document.createElement('button');
-personalizeBtn.className = 'button';
 buttons.appendChild(personalizeBtn);
 
 // Add book button
 const addBookBtn = document.createElement('button');
-addBookBtn.className = 'button';
 buttons.appendChild(addBookBtn);
 
 
