@@ -22,6 +22,7 @@ let myLibrary = [];
 
 // Personalize button
 const personalizeBtn = document.createElement('button');
+personalizeBtn.classList.add('hidden');
 buttons.appendChild(personalizeBtn);
 
 // Add book button
@@ -260,19 +261,33 @@ function menuChange(x) {
 
 //========NOTES========\\
 /*
-	Make it look good.
-	When library is populated 
-		top of page says "My Library"
-			*Personalized option
-		add book moves to the right corner
-		menu in left corner
-			personalize
-			about
-			sort
-		sort ability
-			sort by title, author, pages, read
-		thumbnails
-
+	- Responsive
+		- One book on mobile
+		- More as screen gets bigger
+	- List of all books (collapsed)
+	- Personalization
+		- colors
+		- Name
+		- sort books by
+			- title
+			- author
+			- when added
+			- number of pages
+			
+	- Menu
+		- opens to show
+			- personalize
+			- about
+			- sort
+	
+	- Animations
+		- after first book added
+			- add book buttons (and others) move to the top and morph into new forms
+	
+	- Auto books
+		- add a read file to populate random books into library if you want.
+		- add button to start with random books
+			- input number of books you want (maybe radio-buttons)
 */
 
 
