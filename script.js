@@ -193,6 +193,7 @@ function displayStorage() {
 }
 
 function randomColor() {
+	const body = document.querySelector('body');
 	let random = Math.floor(Math.random() * 5) + 5;
 	let prefix = '--color';
 	let number;
