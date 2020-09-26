@@ -8,55 +8,53 @@
 </head>
 
 <body>
-	<div id="body">
-		<div id="welcome">
-			<h1>Welcome!</h1>
-			<p>This handy little library will help you keep track of the books you've read and the ones you want to read. </p>
-			<p>Just click 'add a book' to add your first one!</p>
-			<!-- <p>To create a profile and personalize the site click 'personalize.'</p> -->
-		</div>
-		<div id="buttons">
-			<div id="populated">
-				<div id="menu" class="formHidden" onclick='menuChange(this)'>
-					<div class="menu1"></div>
-					<div class="menu2"></div>
-					<div class="menu3"></div>
-				</div>
-				<h1 id="title"></h1>
-				<div id="add">
-					<div class="add0"></div>
-					<div class="add1"></div>
-					<div class="add2"></div>
-				</div>
+	
+	<div id="welcome">
+		<h1>Welcome!</h1>
+		<p>This handy little library will help you keep track of the books you've read and the ones you want to read. </p>
+		<p>Just click 'add a book' to add your first one!</p>
+		<!-- <p>To create a profile and personalize the site click 'personalize.'</p> -->
+	</div>
+	<div id="buttons">
+		<div id="populated">
+			<div id="menu" class="formHidden" onclick='menuChange(this)'>
+				<div class="menu1"></div>
+				<div class="menu2"></div>
+				<div class="menu3"></div>
+			</div>
+			<h1 id="title"></h1>
+			<div id="add">
+				<div class="add0"></div>
+				<div class="add1"></div>
+				<div class="add2"></div>
 			</div>
 		</div>
-		<div id="newBook">
-			<form onsubmit='addBooktoLibrary();return false' method="post" action="">
-				<fieldset>
-					<legend>Add a New Book</legend>
-					<!--action: where to store info
-						target: where to display info (default is in current page: _self)
-						method: hTTP methodto use when submitting form data
-							GET is default - not secure
-							POST is better for security
-						onsubmit: calls a JS function-->
-					<label for="ftitle">Title:</label>
-					<input type="text" name="ftitle" id="ftitle" placeholder="title" /><br />
-					<label for="fauthor">Author:</label>
-					<input type="text" name="fauthor" id="fauthor" placeholder="author" /><br />
-					<label for="fpages">Number of Pages:</label>
-					<input type="number" name="fpages" id="fpages" placeholder="pages" /><br />
-					<label for="fread">Have you read this book?</label>
-					<input type="checkbox" name="fread" id="fread" ><br />
-					<input type="submit" name="" value="Submit" id="submit" />
-				</fieldset>
-			</form>
-		</div>
-		
-		<div id="library"></div>
-	
-		<div id="test"></div>
 	</div>
+	<div id="newBook">
+		<form onsubmit='addBooktoLibrary();return false' method="post" action="">
+			<fieldset>
+				<legend>Add a New Book</legend>
+				<!--action: where to store info
+					target: where to display info (default is in current page: _self)
+					method: hTTP methodto use when submitting form data
+						GET is default - not secure
+						POST is better for security
+					onsubmit: calls a JS function-->
+				<label for="ftitle">Title:</label>
+				<input type="text" name="ftitle" id="ftitle" placeholder="title" /><br />
+				<label for="fauthor">Author:</label>
+				<input type="text" name="fauthor" id="fauthor" placeholder="author" /><br />
+				<label for="fpages">Number of Pages:</label>
+				<input type="number" name="fpages" id="fpages" placeholder="pages" /><br />
+				<label for="fread">Have you read this book?</label>
+				<input type="checkbox" name="fread" id="fread" ><br />
+				<input type="submit" name="" value="Submit" id="submit" />
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="library"></div>
+
 	
 <script src="script.js" type="text/javascript"></script>
 

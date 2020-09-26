@@ -1,6 +1,5 @@
 // Associating divs in HTML with JS
 const library = document.querySelector('#library');
-const body = document.querySelector('#body');
 const bookForm = document.querySelector('#newBook');
 const welcome = document.querySelector('#welcome');
 const buttons = document.querySelector('#buttons');
@@ -10,7 +9,7 @@ const menu = document.querySelector('#menu');
 const title = document.querySelector('#title');
 const add = document.querySelector('#add');
 
-test
+
 welcomeBtns.classList.add('welcomeBtns');
 populated.classList.add('populated');
 
