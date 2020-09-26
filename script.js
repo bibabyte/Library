@@ -1,6 +1,6 @@
 // Associating divs in HTML with JS
 const library = document.querySelector('#library');
-const bookForm = document.querySelector('#newBook');
+const bookForm = document.querySelector('#newBookDiv');
 const welcome = document.querySelector('#welcome');
 const buttons = document.querySelector('#buttons');
 const populated = document.querySelector('#populated');
@@ -85,19 +85,15 @@ function addBooktoLibrary() {
 	bookForm.classList.remove('formOpen');
 	
 	
-	//CLEAR FORM
-		// MODIFY: create a class for all, iterate through the class clearing text/value in for loop.
-	document.querySelector('#fauthor').value = '';
-	document.querySelector('#ftitle').value = '';
-	document.querySelector('#fpages').value = '';
-	document.querySelector('#fread').value = '';
-	
-	// Populate cards
-	
 	render();
 	
 }
 
+function clearForm() {
+	document.getElementById('newBook').reset();
+}
+	
+	
 
 // Display books on screen
 function render() {

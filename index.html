@@ -24,22 +24,22 @@
 			</div>
 			<h1 id="title"></h1>
 			<div id="add">
-				<div class="add0"></div>
 				<div class="add1"></div>
 				<div class="add2"></div>
 			</div>
 		</div>
 	</div>
-	<div id="newBook">
-		<form onsubmit='addBooktoLibrary();return false' method="post" action="">
+	<div id="newBookDiv">
+		<form id="newBook" onsubmit='return false' method="post" action="">
 			<fieldset>
 				<legend>Add a New Book</legend>
 				<!--action: where to store info
+			USE THIS FOR STORAGE - PHP
 					target: where to display info (default is in current page: _self)
-					method: hTTP methodto use when submitting form data
+					method: HTTP method to use when submitting form data
 						GET is default - not secure
 						POST is better for security
-					onsubmit: calls a JS function-->
+					onsubmit: calls a JS function generally refreshes page. return false allows no page refresh.-->
 				<label for="ftitle">Title:</label>
 				<input type="text" name="ftitle" id="ftitle" placeholder="title" /><br />
 				<label for="fauthor">Author:</label>
@@ -48,14 +48,14 @@
 				<input type="number" name="fpages" id="fpages" placeholder="pages" /><br />
 				<label for="fread">Have you read this book?</label>
 				<input type="checkbox" name="fread" id="fread" ><br />
-				<input type="submit" name="" value="Submit" id="submit" />
+				<button type="submit" name="" value="Submit" id="submit" onclick='addBooktoLibrary();clearForm();'>Submit</button>
 			</fieldset>
 		</form>
 	</div>
 	
 	<div id="library"></div>
 
-	<div id="test"></div>
+
 
 	
 <script src="script.js" type="text/javascript"></script>
