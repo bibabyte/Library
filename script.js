@@ -11,8 +11,6 @@ const title = document.querySelector('#title');
 const add = document.querySelector('#add');
 
 
-// buttons.classList.add('hasLib');
-//buttons.className = 'hasLib';
 welcomeBtns.classList.add('welcomeBtns');
 populated.classList.add('populated');
 
@@ -57,7 +55,7 @@ if(localStorage.getItem('library')) {
 
 // Create books with FACTORY FUNCTION
 function createBook(title, author, pages, read, index, color) {
-	var book = Object.create(createBook.prototype);
+	//var book = Object.create(createBook.prototype); // This doens't seem necesary. Why was it here and what should it do?
 	return {title, author, pages, read, index, color};
 }
 
@@ -114,7 +112,7 @@ function render() {
 		welcomeButtons();
 	}
 	
-	// Remove exisiting nodes from the display to allow a full repopulation below, 
+	// Remove exisiting nodes from the display
 	while (library.hasChildNodes()){
 		library.removeChild(library.lastChild);
 	} 
@@ -236,6 +234,8 @@ function welcomeButtons() {
 	personalizeBtn.textContent = 'Personalize';
 	
 }
+
+
 
 /*function personalize() {
 	form = can enter:
