@@ -1,55 +1,122 @@
-// Associating divs in HTML with JS
-const library = document.querySelector('#library');
-const bookForm = document.querySelector('#newBook');
-const welcome = document.querySelector('#welcome');
-const buttons = document.querySelector('#buttons');
-const populated = document.querySelector('#populated');
-const welcomeBtns = document.createElement('div');
-const menu = document.querySelector('#menu');
-const title = document.querySelector('#title');
-const add = document.querySelector('#add');
+// Header Module
+const header = (() => {
+	// Reference divs in HTML
+	const welcome = document.querySelector('#welcome');
+	const buttons = document.querySelector('#buttons');
+	const populated = document.querySelector('#populated');
+	const welcomeBtns = document.createElement('div');
+	const menu = document.querySelector('#menu');
+	const title = document.querySelector('#title');
+	const add = document.querySelector('#add');
+	
+	// Add classes to buttons
+	welcomeBtns.classList.add('welcomeBtns');
+	populated.classList.add('populated');
+	
+	// Personalize button
+	const personalizeBtn = document.createElement('button');
+	personalizeBtn.classList.add('hidden');
+	buttons.appendChild(personalizeBtn);
+	
+	// Add book button
+	const addBookBtn = document.createElement('button');
+	buttons.appendChild(addBookBtn);
+	
+	
+	
+	buttons.appendChild(welcomeBtns);
+	welcomeBtns.appendChild(personalizeBtn);
+	welcomeBtns.appendChild(addBookBtn);
+	populated.appendChild(menu);
+	populated.appendChild(title);
+	populated.appendChild(add);
+	
+	return {
+		addBookBtn,
+		personalizeBtn,
+		add,
+		
+	}
+})
 
 
-welcomeBtns.classList.add('welcomeBtns');
-populated.classList.add('populated');
 
-// An array to store each card
-let myLibrary = [];
-
-
-// Personalize button
-const personalizeBtn = document.createElement('button');
-personalizeBtn.classList.add('hidden');
-buttons.appendChild(personalizeBtn);
-
-// Add book button
-const addBookBtn = document.createElement('button');
-buttons.appendChild(addBookBtn);
-
-
-
-buttons.appendChild(welcomeBtns);
-welcomeBtns.appendChild(personalizeBtn);
-welcomeBtns.appendChild(addBookBtn);
-populated.appendChild(menu);
-populated.appendChild(title);
-populated.appendChild(add);
-
-// Form hidden/visible
-bookForm.classList.toggle('formHidden');
-addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
-// Hiding form after submission is in addBooktoLibrary() function
-add.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
+// Library Module
+const displayLibrary = (() => {
+	const library = document.querySelector('#library');	
+	let myLibrary = [];
+	
+	// Stored books auto-populate + show Welcome if no books are in storage + toggle buttons on load
+	function showLocalStorage() {
+		if(localStorage.getItem('library')) {
+			myLibrary = JSON.parse(localStorage.getItem('library'));
+			render();
+		} else {
+			welcome.classList.remove('hidden');
+			welcomeButtons();
+		}
+	}
+	
+	return {
+		myLibrary,
+		showLocalStorage,
+		
+	}
+})
+// Display Local Storage on load
 
 
-// Stored books auto-populate + show Welcome if no books are in storage + toggle buttons on load
-if(localStorage.getItem('library')) {
-	myLibrary = JSON.parse(localStorage.getItem('library'));
-	render();
-} else {
-	welcome.classList.remove('hidden');
-	welcomeButtons();
-}
+// Form Module
+const displayBookForm = (() => {
+	const bookForm = document.querySelector('#newBook');
+	
+	// Form hidden/visible
+	bookForm.classList.toggle('formHidden');
+	addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
+	// Hiding form after submission is in addBooktoLibrary() function
+	add.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
+	
+	function addBooktoLibrary() {
+	
+		// Collect data from form
+		let author = document.querySelector('#fauthor').value;
+		let title = document.querySelector('#ftitle').value;
+		let pages = document.querySelector('#fpages').value;
+		let read = document.querySelector('#fread').checked;
+		
+		// Find index number through myLibrary array
+		let index = myLibrary.length;
+		
+		// Assign random color
+		let color = randomColor();
+		
+		// Create Book object 
+		let book = createBook(title, author, pages, read, index, color);
+		
+		// Add book to myLibrary
+		myLibrary.push(book);
+		populateStorage();	
+		
+		// Hide form
+		bookForm.classList.remove('formOpen');
+			
+		//CLEAR FORM
+			// MODIFY: create a class for all, iterate through the class clearing text/value in for loop.
+		document.querySelector('#fauthor').value = '';
+		document.querySelector('#ftitle').value = '';
+		document.querySelector('#fpages').value = '';
+		document.querySelector('#fread').value = '';
+		
+		// Populate cards
+		render();
+	}
+	
+	return {
+		addBooktoLibrary,
+	}
+})
+
+
 
 
 // Create books with FACTORY FUNCTION
@@ -60,43 +127,7 @@ function createBook(title, author, pages, read, index, color) {
 
 
 // Create a book from the form, add it to myLibrary array and localStorage
-function addBooktoLibrary() {
-	
-	// Collect data from form
-	let author = document.querySelector('#fauthor').value;
-	let title = document.querySelector('#ftitle').value;
-	let pages = document.querySelector('#fpages').value;
-	let read = document.querySelector('#fread').checked;
-	
-	// Find index number through myLibrary array
-	let index = myLibrary.length;
-	
-	// Assign random color
-	let color = randomColor();
-	
-	// Create Book object 
-	let book = createBook(title, author, pages, read, index, color);
-	
-	// Add book to myLibrary
-	myLibrary.push(book);
-	populateStorage();	
-	
-	// Hide form
-	bookForm.classList.remove('formOpen');
-	
-	
-	//CLEAR FORM
-		// MODIFY: create a class for all, iterate through the class clearing text/value in for loop.
-	document.querySelector('#fauthor').value = '';
-	document.querySelector('#ftitle').value = '';
-	document.querySelector('#fpages').value = '';
-	document.querySelector('#fread').value = '';
-	
-	// Populate cards
-	
-	render();
-	
-}
+
 
 
 // Display books on screen
