@@ -5,8 +5,4 @@ function createBook(title, author, pages, read, index, color) {
 }
 
 
-function oranges() {
-	console.log('oranges');
-}
-
 export { createBook }

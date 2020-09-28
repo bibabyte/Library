@@ -54,56 +54,15 @@ if(localStorage.getItem('library')) {
 }
 
 
-// Create books with FACTORY FUNCTION
-/*function createBook(title, author, pages, read, index, color) {
-	//var book = Object.create(createBook.prototype); // This doens't seem necesary. Why was it here and what should it do?
-	return {title, author, pages, read, index, color};
-}*/
-
 	import { createBook } from './modules-2/createBook.js';
-
-
+	import { addBooktoLibrary } from './modules-2/addBooktoLibrary.js';
+	import { clearForm } from './modules-2/clearForm.js'
 
 // SUBMIT FORM - create an element for this and put it inside a module/function
 document.querySelector('#submit').addEventListener('click', () => {
 	addBooktoLibrary();
 	clearForm();
 } );
-
-// Create a book from the form, add it to myLibrary array and localStorage
-function addBooktoLibrary() {
-	
-	// Collect data from form
-	let author = document.querySelector('#fauthor').value;
-	let title = document.querySelector('#ftitle').value;
-	let pages = document.querySelector('#fpages').value;
-	let read = document.querySelector('#fread').checked;
-	
-	// Find index number through myLibrary array
-	let index = myLibrary.length;
-	
-	// Assign random color
-	let color = randomColor();
-	
-	// Create Book object 
-	let book = createBook(title, author, pages, read, index, color);
-	
-	// Add book to myLibrary
-	myLibrary.push(book);
-	populateStorage();	
-	
-	// Hide form
-	bookForm.classList.remove('formOpen');
-	
-	
-	render();
-	
-}
-
-function clearForm() {
-	document.getElementById('newBook').reset();
-}
-	
 	
 
 // Display books on screen
@@ -309,4 +268,4 @@ to call a HTML element in JS:
 			minute 6
 		/*/
 
-	
+	export { myLibrary, randomColor, populateStorage, bookForm, render }
