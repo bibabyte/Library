@@ -1,3 +1,5 @@
+
+
 // Associating divs in HTML with JS
 const library = document.querySelector('#library');
 const bookForm = document.querySelector('#newBookDiv');
@@ -58,6 +60,15 @@ function createBook(title, author, pages, read, index, color) {
 	return {title, author, pages, read, index, color};
 }
 
+	import { oranges } from './modules-2/createBook.js';
+oranges();
+
+
+// SUBMIT FORM - create an element for this and put it inside a module/function
+document.querySelector('#submit').addEventListener('click', () => {
+	addBooktoLibrary();
+	clearForm();
+} );
 
 // Create a book from the form, add it to myLibrary array and localStorage
 function addBooktoLibrary() {
@@ -112,7 +123,7 @@ function render() {
 		library.removeChild(library.lastChild);
 	} 
 	
-	let card, newTitle, newAuthor, newPages, readBtn, delBook;
+	let card, newTitle, newAuthor, newPages, newBtnDiv,readBtn, delBook;
 	
 	
 	// Display each book in myLibrary
@@ -297,4 +308,5 @@ to call a HTML element in JS:
 		https://m.youtube.com/watch?v=fjJoX9F_F5g
 			minute 6
 		/*/
-		
+
+	
