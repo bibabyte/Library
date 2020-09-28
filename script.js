@@ -55,13 +55,13 @@ if(localStorage.getItem('library')) {
 
 
 // Create books with FACTORY FUNCTION
-function createBook(title, author, pages, read, index, color) {
+/*function createBook(title, author, pages, read, index, color) {
 	//var book = Object.create(createBook.prototype); // This doens't seem necesary. Why was it here and what should it do?
 	return {title, author, pages, read, index, color};
-}
+}*/
 
-	import { oranges } from './modules-2/createBook.js';
-oranges();
+	import { createBook } from './modules-2/createBook.js';
+
 
 
 // SUBMIT FORM - create an element for this and put it inside a module/function
