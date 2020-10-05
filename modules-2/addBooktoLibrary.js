@@ -1,5 +1,6 @@
-import { myLibrary, randomColor, populateStorage, bookForm, render } from '../script.js';
-import { createBook } from './createBook.js';
+import { myLibrary, randomColor, populateStorage, render } from '../script.js';
+import { createBook, bbtns } from './createBook.js';
+
 //import { render } from './render.js'
 
 
@@ -26,7 +27,7 @@ function addBooktoLibrary() {
 	populateStorage();	
 	
 	// Hide form
-	bookForm.classList.remove('formOpen');
+	bbtns.bookForm.classList.remove('formOpen');
 	
 	
 	render();

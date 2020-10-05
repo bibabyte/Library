@@ -1,47 +1,8 @@
 
 
-// Associating divs in HTML with JS
-const library = document.querySelector('#library');
-const bookForm = document.querySelector('#newBookDiv');
-const welcome = document.querySelector('#welcome');
-const buttons = document.querySelector('#buttons');
-const populated = document.querySelector('#populated');
-const welcomeBtns = document.createElement('div');
-const menu = document.querySelector('#menu');
-const title = document.querySelector('#title');
-const add = document.querySelector('#add');
 
-
-welcomeBtns.classList.add('welcomeBtns');
-populated.classList.add('populated');
-
-// An array to store each card
 let myLibrary = [];
 
-
-// Personalize button
-const personalizeBtn = document.createElement('button');
-personalizeBtn.classList.add('hidden');
-buttons.appendChild(personalizeBtn);
-
-// Add book button
-const addBookBtn = document.createElement('button');
-buttons.appendChild(addBookBtn);
-
-
-
-buttons.appendChild(welcomeBtns);
-welcomeBtns.appendChild(personalizeBtn);
-welcomeBtns.appendChild(addBookBtn);
-populated.appendChild(menu);
-populated.appendChild(title);
-populated.appendChild(add);
-
-// Form hidden/visible
-bookForm.classList.toggle('formHidden');
-addBookBtn.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
-// Hiding form after submission is in addBooktoLibrary() function
-add.addEventListener('click', () => bookForm.classList.toggle('formOpen'));
 
 
 // Stored books auto-populate + show Welcome if no books are in storage + toggle buttons on load
@@ -49,12 +10,12 @@ if(localStorage.getItem('library')) {
 	myLibrary = JSON.parse(localStorage.getItem('library'));
 	render();
 } else {
-	welcome.classList.remove('hidden');
+	bbtns.welcome.classList.remove('hidden');
 	welcomeButtons();
 }
 
 
-	import { createBook } from './modules-2/createBook.js';
+	import { createBook, bbtns } from './modules-2/createBook.js';
 	import { addBooktoLibrary } from './modules-2/addBooktoLibrary.js';
 	import { clearForm } from './modules-2/clearForm.js'
 
@@ -69,17 +30,17 @@ document.querySelector('#submit').addEventListener('click', () => {
 function render() {
 	// Toggle welcome and display buttons
 	if (myLibrary.length > 0) { 
-		welcome.classList.remove('unhidden');
-		welcome.classList.add('hidden');	
+		bbtns.welcome.classList.remove('unhidden');
+		bbtns.welcome.classList.add('hidden');	
 		populatedButtons();
 	} else {
-		welcome.classList.toggle('hidden');
+		bbtns.welcome.classList.toggle('hidden');
 		welcomeButtons();
 	}
 	
 	// Remove exisiting nodes from the display
-	while (library.hasChildNodes()){
-		library.removeChild(library.lastChild);
+	while (bbtns.library.hasChildNodes()){
+		bbtns.library.removeChild(bbtns.library.lastChild);
 	} 
 	
 	let card, newTitle, newAuthor, newPages, newBtnDiv,readBtn, delBook;
@@ -110,11 +71,11 @@ function render() {
 				if (myLibrary.length <= 1) {
 					myLibrary = [];
 					localStorage.clear();
-					welcome.classList.add('unhidden');
+					bbtns.welcome.classList.add('unhidden');
 				} else {
 					let idx = book.index
 					myLibrary.splice(idx, 1);
-					welcome.classList.add('hidden');
+					bbtns.welcome.classList.add('hidden');
 					myLibrary.forEach((book) => {
 						if (book.index > idx) {
 							book.index--;
@@ -125,7 +86,7 @@ function render() {
 			}
 		});
 		populateStorage();
-		library.appendChild(card);
+		bbtns.library.appendChild(card);
 		card.appendChild(newTitle);
 		card.appendChild(newAuthor);
 		card.appendChild(newPages);
@@ -188,16 +149,16 @@ function randomColor() {
 
 
 function populatedButtons() {
-	welcomeBtns.classList.add('hidden');
-	populated.classList.remove('hidden');
+	bbtns.welcomeBtns.classList.add('hidden');
+	bbtns.populated.classList.remove('hidden');
 	title.textContent = 'My Library';
 }
 
 function welcomeButtons() {
-	welcomeBtns.classList.remove('hidden');
-	populated.classList.add('hidden');
-	addBookBtn.textContent = 'Add a Book';
-	personalizeBtn.textContent = 'Personalize';
+	bbtns.welcomeBtns.classList.remove('hidden');
+	bbtns.populated.classList.add('hidden');
+	bbtns.addBookBtn.textContent = 'Add a Book';
+	bbtns.personalizeBtn.textContent = 'Personalize';
 	
 }
 
@@ -268,4 +229,4 @@ to call a HTML element in JS:
 			minute 6
 		/*/
 
-	export { myLibrary, randomColor, populateStorage, bookForm, render }
+	export { myLibrary, randomColor, populateStorage, render }
