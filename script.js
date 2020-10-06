@@ -1,4 +1,7 @@
-
+import { createBook, bbtns } from './modules-2/createBook.js';
+import { addBooktoLibrary } from './modules-2/addBooktoLibrary.js';
+import { clearForm } from './modules-2/clearForm.js'
+	
 
 
 let myLibrary = [];
@@ -15,9 +18,6 @@ if(localStorage.getItem('library')) {
 }
 
 
-	import { createBook, bbtns } from './modules-2/createBook.js';
-	import { addBooktoLibrary, book } from './modules-2/addBooktoLibrary.js';
-	import { clearForm } from './modules-2/clearForm.js'
 
 // SUBMIT FORM - create an element for this and put it inside a module/function
 document.querySelector('#submit').addEventListener('click', () => {
@@ -25,6 +25,8 @@ document.querySelector('#submit').addEventListener('click', () => {
 	clearForm();
 } );
 	
+
+//========= RENDER TAKEN APART ==========\\
 
 function toggleView() {
 	if (myLibrary.length > 0) { 
@@ -43,27 +45,30 @@ function clearNodes () {
 	} 	
 }
 
-/*function toggleBookRead(ele) {
-	if (ele.read == 1) {
-		ele.read = 0;
+function toggleBookRead(book) {
+	if (book.read == 1) {
+		book.read = 0;
+		render();
+		return;
+	} else {
+		book.read = 1;
 		render();
 		return;
 	}
-	ele.read = 1;
-	render();
-	return;
-}*/
+}
 
 
 function displayBook(book) {
-	let card, newTitle, newAuthor, newPages, newBtnDiv,readBtn, delBook;
+	let card, newTitle, newAuthor, newPages, newBtnDiv, readBtn, delBook;
 	card = document.createElement('div');
 	newTitle = document.createElement('h1');
 	newAuthor = document.createElement('p');
 	newPages = document.createElement('p');
 	newBtnDiv = document.createElement('div');
 	readBtn = document.createElement('button');
-	readBtn.addEventListener('click', function () {
+	readBtn.addEventListener('click', random => toggleBookRead(book) );
+	
+/*	=> {
 		if (book.read == 1) {
 			book.read = 0;
 			render();
@@ -71,7 +76,7 @@ function displayBook(book) {
 		}
 		book.read = 1;
 		render();
-	});
+	});*/
 	delBook = document.createElement('button');
 	delBook.addEventListener('click', function () {
 		if (confirm(`Do you want to delete ` + book.title + ` from your library?`)) {

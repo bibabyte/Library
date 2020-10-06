@@ -2,7 +2,7 @@ import { myLibrary, randomColor, populateStorage, render } from '../script.js';
 import { createBook, bbtns } from './createBook.js';
 
 //import { render } from './render.js'
- var book;
+
 
 // Create a book from the form, add it to myLibrary array and localStorage
 function addBooktoLibrary() {
@@ -20,7 +20,7 @@ function addBooktoLibrary() {
 	let color = randomColor();
 	
 	// Create Book object 
-	 book = createBook(title, author, pages, read, index, color);
+	let book = createBook(title, author, pages, read, index, color);
 	
 	// Add book to myLibrary
 	myLibrary.push(book);
@@ -35,5 +35,5 @@ function addBooktoLibrary() {
 }
 
 
-export { addBooktoLibrary, book }
+export { addBooktoLibrary }
 
