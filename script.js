@@ -16,7 +16,7 @@ if(localStorage.getItem('library')) {
 
 
 	import { createBook, bbtns } from './modules-2/createBook.js';
-	import { addBooktoLibrary } from './modules-2/addBooktoLibrary.js';
+	import { addBooktoLibrary, book } from './modules-2/addBooktoLibrary.js';
 	import { clearForm } from './modules-2/clearForm.js'
 
 // SUBMIT FORM - create an element for this and put it inside a module/function
@@ -26,90 +26,114 @@ document.querySelector('#submit').addEventListener('click', () => {
 } );
 	
 
+function toggleView() {
+	if (myLibrary.length > 0) { 
+		welcome.classList.remove('unhidden');
+		welcome.classList.add('hidden');	
+		populatedButtons();
+	} else {
+		welcome.classList.toggle('hidden');
+		welcomeButtons();
+	}
+}
+
+function clearNodes () {
+	while (library.hasChildNodes()){
+		library.removeChild(library.lastChild);
+	} 	
+}
+
+/*function toggleBookRead(ele) {
+	if (ele.read == 1) {
+		ele.read = 0;
+		render();
+		return;
+	}
+	ele.read = 1;
+	render();
+	return;
+}*/
+
+
+function displayBook(book) {
+	let card, newTitle, newAuthor, newPages, newBtnDiv,readBtn, delBook;
+	card = document.createElement('div');
+	newTitle = document.createElement('h1');
+	newAuthor = document.createElement('p');
+	newPages = document.createElement('p');
+	newBtnDiv = document.createElement('div');
+	readBtn = document.createElement('button');
+	readBtn.addEventListener('click', function () {
+		if (book.read == 1) {
+			book.read = 0;
+			render();
+			return;
+		}
+		book.read = 1;
+		render();
+	});
+	delBook = document.createElement('button');
+	delBook.addEventListener('click', function () {
+		if (confirm(`Do you want to delete ` + book.title + ` from your library?`)) {
+			if (myLibrary.length <= 1) {
+				myLibrary = [];
+				localStorage.clear();
+				welcome.classList.add('unhidden');
+			} else {
+				let idx = book.index
+				myLibrary.splice(idx, 1);
+				welcome.classList.add('hidden');
+				myLibrary.forEach((book) => {
+					if (book.index > idx) {
+						book.index--;
+					}
+				})
+			}			
+			render();
+		}
+
+	});
+
+	//	deleteBook());
+	populateStorage();
+	library.appendChild(card);
+	card.appendChild(newTitle);
+	card.appendChild(newAuthor);
+	card.appendChild(newPages);
+	card.appendChild(newBtnDiv);
+	newBtnDiv.appendChild(readBtn);
+	newBtnDiv.appendChild(delBook);
+	card.style.backgroundColor = book.color;
+	card.className = 'book';
+	newBtnDiv.className = 'cardButtons';
+	newTitle.textContent = book.title;
+	newAuthor.textContent = `by ${book.author}`;
+	newPages.textContent = `${book.pages} pages`;
+	if (book.read) {
+		readBtn.textContent = 'Read';
+		readBtn.className = 'read';
+	}else {
+		readBtn.textContent = 'Not Read';
+		readBtn.className = 'notRead';
+	}	
+	delBook.textContent = 'Delete';
+	delBook.className = 'delete';	
+}
+
 // Display books on screen
 function render() {
 	// Toggle welcome and display buttons
-	if (myLibrary.length > 0) { 
-		bbtns.welcome.classList.remove('unhidden');
-		bbtns.welcome.classList.add('hidden');	
-		populatedButtons();
-	} else {
-		bbtns.welcome.classList.toggle('hidden');
-		welcomeButtons();
-	}
+	toggleView();
 	
 	// Remove exisiting nodes from the display
-	while (bbtns.library.hasChildNodes()){
-		bbtns.library.removeChild(bbtns.library.lastChild);
-	} 
-	
-	let card, newTitle, newAuthor, newPages, newBtnDiv,readBtn, delBook;
-	
+	clearNodes();
 	
 	// Display each book in myLibrary
-	myLibrary.forEach( (book) => {
-		card = document.createElement('div');
-		newTitle = document.createElement('h1');
-		newAuthor = document.createElement('p');
-		newPages = document.createElement('p');
-		newBtnDiv = document.createElement('div');
-		readBtn = document.createElement('button');
-		readBtn.addEventListener('click', function () {
-			if (book.read == 1) {
-				book.read = 0;
-				render();
-				return;
-			}
-			book.read = 1;
-			render();
-			// Is calling render the cleanest, simplist way to do this? It seems overkill to remove and add again all books.
-			// I'd like to get this to reference a toggle funciton in the Book creator funciton...is this posible with factory (vs constructor?) - see TOP instructions 6.1
-		})
-		delBook = document.createElement('button');
-		delBook.addEventListener('click', function () {
-			if (confirm(`Do you want to delete ` + book.title + ` from your library?`)) {
-				if (myLibrary.length <= 1) {
-					myLibrary = [];
-					localStorage.clear();
-					bbtns.welcome.classList.add('unhidden');
-				} else {
-					let idx = book.index
-					myLibrary.splice(idx, 1);
-					bbtns.welcome.classList.add('hidden');
-					myLibrary.forEach((book) => {
-						if (book.index > idx) {
-							book.index--;
-						}
-					})
-				}			
-				render();
-			}
-		});
-		populateStorage();
-		bbtns.library.appendChild(card);
-		card.appendChild(newTitle);
-		card.appendChild(newAuthor);
-		card.appendChild(newPages);
-		card.appendChild(newBtnDiv);
-		newBtnDiv.appendChild(readBtn);
-		newBtnDiv.appendChild(delBook);
-		card.style.backgroundColor = book.color;
-		card.className = 'book';
-		newBtnDiv.className = 'cardButtons';
-		newTitle.textContent = book.title;
-		newAuthor.textContent = `by ${book.author}`;
-		newPages.textContent = `${book.pages} pages`;
-		if (book.read) {
-			readBtn.textContent = 'Read';
-			readBtn.className = 'read';
-		}else {
-			readBtn.textContent = 'Not Read';
-			readBtn.className = 'notRead';
-		}
-		delBook.textContent = 'Delete';
-		delBook.className = 'delete';		
-	});
+	myLibrary.forEach( element => displayBook(element) ); 
 }
+		
+
+
 
 function populateStorage() {
 	localStorage.setItem('library', JSON.stringify(myLibrary));
